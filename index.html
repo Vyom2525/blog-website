@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f3f1e9">
+	<meta name="description" content="Dispatches from competitive gaming: match stories, player profiles, strategy, and the culture around esports.">
+	<title>Overtime — Competitive Gaming, In Play</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: light;
+			--paper: #f3f1e9;
+			--ink: #191a17;
+			--muted: #686a61;
+			--line: #d7d5cc;
+			--red: #f14832;
+			--lime: #d7f36a;
+			--white: #fffefa;
+			--display: "Barlow Condensed", Impact, sans-serif;
+			--body: "DM Sans", sans-serif;
+		}
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); }
+		button, input { font: inherit; }
+		button { color: inherit; }
+		a { color: inherit; text-decoration: none; }
+		.shell { width: min(1280px, calc(100% - 64px)); margin-inline: auto; }
+		.masthead { border-bottom: 1px solid var(--ink); }
+		.masthead-row { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+		.brand { display: inline-flex; align-items: center; gap: 11px; font: 900 37px/.8 var(--display); text-transform: uppercase; }
+		.brand-mark { width: 31px; height: 31px; display: grid; place-items: center; background: var(--red); color: var(--white); font: 700 18px/1 var(--body); transform: rotate(-8deg); }
+		.brand span:last-child { padding-top: 3px; }
+		.main-nav { display: flex; align-items: center; gap: 34px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+		.main-nav a { transition: color .18s ease; }
+		.main-nav a:hover, .main-nav a:focus-visible { color: var(--red); }
+		.nav-date { color: var(--muted); font-size: 11px; font-weight: 600; }
+		.menu-toggle { display: none; border: 0; background: transparent; cursor: pointer; font-size: 22px; }
+		.ticker { background: var(--ink); color: var(--white); }
+		.ticker-row { min-height: 42px; display: flex; align-items: center; gap: 20px; overflow: hidden; white-space: nowrap; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+		.ticker-label { align-self: stretch; display: flex; align-items: center; padding-inline: 13px; background: var(--red); }
+		.ticker-item { display: inline-flex; align-items: center; gap: 8px; }
+		.ticker-item b { color: var(--lime); }
+		.ticker-item span { color: #aaa99f; }
+		.ticker-divider { color: #696a63; }
+		.intro { padding-top: 30px; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+		.eyebrow { display: flex; align-items: center; gap: 9px; color: var(--red); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+		.eyebrow::before { width: 18px; height: 2px; background: currentColor; content: ""; }
+		.intro h1 { margin: 8px 0 0; font: 900 78px/.82 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.intro h1 span { color: var(--red); }
+		.intro-note { max-width: 250px; margin: 0 0 4px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+		.hero { display: grid; grid-template-columns: 1fr 1.08fr; margin-top: 29px; min-height: 390px; background: var(--white); }
+		.hero-copy { display: flex; flex-direction: column; justify-content: space-between; padding: 29px 34px 25px; }
+		.story-meta { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; }
+		.story-meta .tag { color: var(--red); }
+		.story-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+		.hero h2 { max-width: 540px; margin: 22px 0 13px; font: 800 53px/.92 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.hero-summary { max-width: 440px; margin: 0; color: #55564f; font-size: 13px; line-height: 1.65; }
+		.story-byline { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 10px; font-weight: 600; text-transform: uppercase; }
+		.read-link { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: transparent; cursor: pointer; font: inherit; text-transform: inherit; }
+		.read-link b { display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; background: var(--lime); font-size: 14px; transition: transform .18s ease; }
+		.read-link:hover b { transform: translateX(3px); }
+		.hero-image { position: relative; min-height: 390px; overflow: hidden; background: #353b3a; }
+		.hero-image img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+		.image-credit { position: absolute; right: 13px; bottom: 11px; color: white; font-size: 9px; text-shadow: 0 1px 4px #000; }
+		.image-stamp { position: absolute; left: 18px; top: 18px; padding: 9px 12px; background: var(--lime); font-size: 9px; font-weight: 700; text-transform: uppercase; }
+		.section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 48px 0 19px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+		.section-title { margin: 0; font: 800 36px/.9 var(--display); text-transform: uppercase; }
+		.section-title span { color: var(--red); }
+		.section-aside { color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; }
+		.controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+		.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+		.filter-button { min-height: 32px; padding: 0 12px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; transition: background .16s ease, border-color .16s ease; }
+		.filter-button:hover, .filter-button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--white); }
+		.search { width: 210px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--ink); }
+		.search span { font-size: 17px; }
+		.search input { width: 100%; padding: 8px 0; border: 0; outline: 0; background: transparent; font-size: 11px; }
+		.search input::placeholder { color: var(--muted); }
+		.article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 18px; }
+		.article-card { min-width: 0; animation: enter .45s both; }
+		.article-card[hidden] { display: none; }
+		@keyframes enter { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+		.card-image { display: block; position: relative; width: 100%; padding: 0; border: 0; text-align: left; cursor: pointer; aspect-ratio: 1.55; overflow: hidden; background: #d4d2c8; }
+		.card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+		.article-card:hover .card-image img { transform: scale(1.035); }
+		.card-category { position: absolute; left: 10px; bottom: 10px; padding: 6px 8px; background: var(--lime); font-size: 9px; font-weight: 700; text-transform: uppercase; }
+		.card-meta { display: flex; justify-content: space-between; gap: 10px; margin-top: 13px; color: var(--muted); font-size: 9px; font-weight: 600; text-transform: uppercase; }
+		.article-card h3 { margin: 8px 0 6px; font: 700 25px/.98 var(--display); text-transform: uppercase; }
+		.article-card p { margin: 0; color: #595a53; font-size: 11px; line-height: 1.55; }
+		.empty-state { display: none; padding: 40px 0 56px; color: var(--muted); font-size: 13px; }
+		.empty-state.visible { display: block; }
+		.newsletter { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; margin-top: 58px; padding: 27px 30px; background: var(--lime); }
+		.newsletter h2 { margin: 0 0 5px; font: 800 31px/.95 var(--display); text-transform: uppercase; }
+		.newsletter p { margin: 0; font-size: 11px; }
+		.newsletter-form { display: flex; width: min(390px, 100%); border-bottom: 1px solid var(--ink); }
+		.newsletter-form input { min-width: 0; flex: 1; padding: 12px 4px; border: 0; outline: 0; background: transparent; font-size: 11px; }
+		.newsletter-form input::placeholder { color: #4f5540; }
+		.newsletter-form button { display: flex; align-items: center; gap: 9px; padding: 0 4px 0 12px; border: 0; background: transparent; cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+		.newsletter-form button span { font-size: 17px; }
+		.form-message { grid-column: 1 / -1; margin: -18px 0 0; font-size: 11px; font-weight: 700; }
+		.story-dialog { width: min(680px, calc(100% - 32px)); max-height: min(82vh, 760px); padding: 0; border: 0; background: var(--white); color: var(--ink); }
+		.story-dialog::backdrop { background: rgb(25 26 23 / 72%); }
+		.reader-content { padding: 32px clamp(22px, 6vw, 58px) 38px; }
+		.reader-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+		.reader-category { color: var(--red); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+		.reader-close { width: 34px; height: 34px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 20px; }
+		.story-dialog h2 { margin: 26px 0 10px; font: 800 48px/.94 var(--display); text-transform: uppercase; }
+		.reader-byline { color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; }
+		.reader-body { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; }
+		.reader-body p { color: #45463f; font-size: 14px; line-height: 1.8; }
+		footer { margin-top: 45px; border-top: 1px solid var(--ink); }
+		.footer-row { min-height: 69px; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font-size: 9px; font-weight: 600; text-transform: uppercase; }
+		.footer-brand { color: var(--ink); font: 800 20px/.9 var(--display); }
+		@media (max-width: 760px) {
+			.shell { width: min(100% - 36px, 560px); }
+			.masthead-row { min-height: 68px; flex-wrap: wrap; gap: 0; }
+			.brand { font-size: 33px; }
+			.menu-toggle { display: block; }
+			.nav-date { display: none; }
+			.main-nav { display: none; order: 3; width: 100%; padding: 0 0 16px; gap: 20px; }
+			.main-nav.open { display: flex; }
+			.ticker-row { gap: 14px; }
+			.ticker-item:nth-of-type(n+4), .ticker-divider:nth-of-type(n+5) { display: none; }
+			.intro { padding-top: 25px; align-items: start; flex-direction: column; gap: 13px; }
+			.intro h1 { font-size: 58px; }
+			.intro-note { max-width: 400px; }
+			.hero { grid-template-columns: 1fr; margin-top: 21px; }
+			.hero-copy { min-height: 310px; padding: 24px 22px 20px; }
+			.hero h2 { font-size: 45px; }
+			.hero-image { min-height: 250px; }
+			.section-head { margin-top: 39px; }
+			.section-aside { display: none; }
+			.article-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px 14px; }
+			.article-card h3 { font-size: 22px; }
+			.controls { align-items: start; flex-direction: column-reverse; }
+			.search { width: 100%; }
+			.newsletter { grid-template-columns: 1fr; gap: 19px; margin-top: 42px; padding: 23px 20px; }
+			.newsletter-form { width: 100%; }
+			.form-message { margin: -8px 0 0; }
+		}
+		@media (max-width: 420px) {
+			.shell { width: calc(100% - 28px); }
+			.intro h1 { font-size: 52px; }
+			.article-grid { grid-template-columns: 1fr; gap: 24px; }
+			.card-image { aspect-ratio: 1.7; }
+			.article-card h3 { font-size: 25px; }
+			.footer-row { flex-wrap: wrap; padding-block: 16px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+		}
+	</style>
+</head>
+<body>
+	<header class="masthead">
+		<div class="shell masthead-row">
+			<a class="brand" href="#top" aria-label="Overtime home"><span class="brand-mark">O</span><span>Overtime</span></a>
+			<button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+			<nav class="main-nav" aria-label="Main navigation">
+				<a href="#stories">Stories</a>
+				<a href="#stories" data-nav-filter="Valorant">Valorant</a>
+				<a href="#stories" data-nav-filter="Counter-Strike">Counter-Strike</a>
+				<a href="#newsletter">The weekly</a>
+			</nav>
+			<span class="nav-date">Independent esports journal · Est. 2024</span>
+		</div>
+	</header>
+	<div class="ticker" aria-label="Tournament results">
+		<div class="shell ticker-row">
+			<span class="ticker-label">In play</span>
+			<span class="ticker-item">VCT Masters <b>G2 2 — 1 GEN</b></span><span class="ticker-divider">/</span>
+			<span class="ticker-item">IEM Dallas <b>NAVI 13 — 9 FaZe</b></span><span class="ticker-divider">/</span>
+			<span class="ticker-item">ALGS Split 2 <span>Finals this weekend</span></span>
+		</div>
+	</div>
+	<main id="top" class="shell">
+		<section class="intro" aria-labelledby="page-title">
+			<div><div class="eyebrow">The competitive gaming journal</div><h1 id="page-title">Play it <span>closer.</span></h1></div>
+			<p class="intro-note">The people, pressure, and split-second decisions behind the biggest moments in esports.</p>
+		</section>
+		<article class="hero">
+			<div class="hero-copy">
+				<div>
+					<div class="story-meta"><span class="tag">Cover story</span><span class="dot"></span><span>Valorant</span><span class="dot"></span><span>8 min read</span></div>
+					<h2>When the whole arena holds its breath</h2>
+					<p class="hero-summary">Inside the final round that turned a season around, and the rookie who trusted their read when everything was on the line.</p>
+				</div>
+				<div class="story-byline"><span>Words by Riley Chen · June 18, 2026</span><button class="read-link" type="button" data-open-story="feature">Read the story <b aria-hidden="true">↗</b></button></div>
+			</div>
+			<div class="hero-image">
+				<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=85" alt="A packed esports arena lit by the stage" fetchpriority="high">
+				<span class="image-stamp">One round changed everything</span>
+				<span class="image-credit">Photo: Unsplash</span>
+			</div>
+		</article>
+		<section id="stories" aria-labelledby="stories-heading">
+			<div class="section-head"><h2 class="section-title" id="stories-heading">Latest <span>dispatches</span></h2><span class="section-aside">New stories, every week</span></div>
+			<div class="controls">
+				<div class="filters" role="group" aria-label="Filter stories by game">
+					<button class="filter-button" type="button" data-filter="all" aria-pressed="true">All stories</button>
+					<button class="filter-button" type="button" data-filter="Valorant" aria-pressed="false">Valorant</button>
+					<button class="filter-button" type="button" data-filter="Counter-Strike" aria-pressed="false">Counter-Strike</button>
+					<button class="filter-button" type="button" data-filter="League of Legends" aria-pressed="false">League</button>
+					<button class="filter-button" type="button" data-filter="Apex Legends" aria-pressed="false">Apex</button>
+				</div>
+				<label class="search"><span aria-hidden="true">⌕</span><input id="story-search" type="search" placeholder="Find a story" aria-label="Search stories"></label>
+			</div>
+			<div class="article-grid" id="article-grid">
+				<article class="article-card" data-game="Counter-Strike">
+					  <button class="card-image" type="button" data-open-story="cs-map" aria-label="Read: The slowest map in Dallas was the fastest lesson"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Gaming setup with a player at the controls" loading="lazy"><span class="card-category">Counter-Strike</span></button>
+					<div class="card-meta"><span>Match report</span><span>June 16 · 6 min</span></div>
+					<h3>The slowest map in Dallas was the fastest lesson</h3>
+					<p>How patience, not aim, decided the series everyone expected to be a shootout.</p>
+				</article>
+				<article class="article-card" data-game="Valorant">
+					  <button class="card-image" type="button" data-open-story="quiet-igL" aria-label="Read: Meet the IGL who calls the quietest timeouts"><img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=900&q=80" alt="Esports competitors focused on a live match" loading="lazy"><span class="card-category">Valorant</span></button>
+					<div class="card-meta"><span>Player profile</span><span>June 14 · 4 min</span></div>
+					<h3>Meet the IGL who calls the quietest timeouts</h3>
+					<p>For Mina, the best mid-round call might be knowing when to say nothing.</p>
+				</article>
+				<article class="article-card" data-game="League of Legends">
+					  <button class="card-image" type="button" data-open-story="summer-draft" aria-label="Read: Three picks rewriting the summer draft"><img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=900&q=80" alt="A player competing under dramatic arena lights" loading="lazy"><span class="card-category">League of Legends</span></button>
+					<div class="card-meta"><span>Meta watch</span><span>June 12 · 5 min</span></div>
+					<h3>Three picks rewriting the summer draft</h3>
+					<p>The flex picks changing first rotation and making analysts rethink blue side.</p>
+				</article>
+				<article class="article-card" data-game="Apex Legends">
+					  <button class="card-image" type="button" data-open-story="drop-spots" aria-label="Read: What a landing spot tells you about a team"><img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=900&q=80" alt="A colorful gaming station set up for competition" loading="lazy"><span class="card-category">Apex Legends</span></button>
+					<div class="card-meta"><span>Field notes</span><span>June 10 · 7 min</span></div>
+					<h3>What a landing spot tells you about a team</h3>
+					<p>Drop choices are more than a map call. They are a whole philosophy in 30 seconds.</p>
+				</article>
+				<article class="article-card" data-game="Counter-Strike">
+					  <button class="card-image" type="button" data-open-story="home-game" aria-label="Read: The chants, the signs, the city that showed up"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" alt="The crowd watching an esports final" loading="lazy"><span class="card-category">Counter-Strike</span></button>
+					<div class="card-meta"><span>Culture</span><span>June 8 · 3 min</span></div>
+					<h3>The chants, the signs, the city that showed up</h3>
+					<p>A weekend in the stands with the fans who turn a tournament into a home game.</p>
+				</article>
+				<article class="article-card" data-game="Valorant">
+					  <button class="card-image" type="button" data-open-story="warm-up" aria-label="Read: Inside the warm-up that starts before sunrise"><img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=900&q=80" alt="Gaming equipment ready for a competitive match" loading="lazy"><span class="card-category">Valorant</span></button>
+					<div class="card-meta"><span>Practice room</span><span>June 5 · 5 min</span></div>
+					<h3>Inside the warm-up that starts before sunrise</h3>
+					<p>One team’s routine is less about grinding hours and more about protecting focus.</p>
+				</article>
+			</div>
+			<p class="empty-state" id="empty-state" role="status">No stories match that search. Try another game or keyword.</p>
+		</section>
+		<section id="newsletter" class="newsletter" aria-labelledby="newsletter-title">
+			<div><h2 id="newsletter-title">The week, on one screen.</h2><p>Match notes, sharp reads, no filler. One email every Friday.</p></div>
+			<form class="newsletter-form" id="newsletter-form">
+				<label for="email" class="visually-hidden">Email address</label>
+				<input id="email" type="email" placeholder="Your email address" required>
+				<button type="submit">Get the weekly <span aria-hidden="true">↗</span></button>
+			</form>
+			<p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+		</section>
+		<dialog class="story-dialog" aria-labelledby="reader-title">
+			<div class="reader-content">
+				<div class="reader-top"><span class="reader-category" id="reader-category"></span><button class="reader-close" type="button" aria-label="Close story">×</button></div>
+				<h2 id="reader-title"></h2>
+				<div class="reader-byline" id="reader-byline"></div>
+				<div class="reader-body" id="reader-body"></div>
+			</div>
+		</dialog>
+	</main>
+	<footer><div class="shell footer-row"><a class="footer-brand" href="#top">Overtime</a><span>Competitive gaming, in play.</span><span>Independent by design · 2026</span></div></footer>
+	<style>.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }</style>
+	<script>
+		const filterButtons = document.querySelectorAll(".filter-button");
+		const cards = [...document.querySelectorAll(".article-card")];
+		const searchInput = document.querySelector("#story-search");
+		const emptyState = document.querySelector("#empty-state");
+		let activeGame = "all";
+
+		function updateStories() {
+			const query = searchInput.value.trim().toLowerCase();
+			let visibleCount = 0;
+			cards.forEach((card) => {
+				const matchesGame = activeGame === "all" || card.dataset.game === activeGame;
+				const matchesSearch = !query || card.textContent.toLowerCase().includes(query);
+				card.hidden = !(matchesGame && matchesSearch);
+				if (!card.hidden) visibleCount += 1;
+			});
+			emptyState.classList.toggle("visible", visibleCount === 0);
+		}
+
+		filterButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				activeGame = button.dataset.filter;
+				filterButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+				updateStories();
+			});
+		});
+		document.querySelectorAll("[data-nav-filter]").forEach((link) => {
+			link.addEventListener("click", () => {
+				activeGame = link.dataset.navFilter;
+				filterButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === activeGame)));
+				updateStories();
+				document.querySelector(".main-nav").classList.remove("open");
+				document.querySelector(".menu-toggle").setAttribute("aria-expanded", "false");
+			});
+		});
+		searchInput.addEventListener("input", updateStories);
+
+		const stories = {
+			feature: {
+				category: "Valorant · Cover story",
+				title: "When the whole arena holds its breath",
+				byline: "Riley Chen · June 18, 2026 · 8 min read",
+				paragraphs: [
+					"The series had already swung twice. One more round would decide whether the season ended here or went on, and the arena knew it. In the timeout, the rookie at the center of the call did not ask for a safer plan. They asked for one more look at the defender's rotation.",
+					"That small detail changed the attack. Instead of forcing the first opening, the team slowed down, pulled the defense across the map, and waited for the gap they had spotted. The final entry looked fearless on the broadcast. In the server, it was patience backed by a read.",
+					"After the match, the player called it trust: trust in the prep, in the comms, and in teammates who could hold their nerve for one more second. The crowd supplied the noise. The team supplied the calm."
+				]
+			},
+			"cs-map": {
+				category: "Counter-Strike · Match report",
+				title: "The slowest map in Dallas was the fastest lesson",
+				byline: "Jordan Lee · June 16, 2026 · 6 min read",
+				paragraphs: [
+					"Everyone expected a duel-heavy series. Instead, the deciding map became a study in how long a team could hold its shape without giving away information. Rotations arrived late. Utility was saved for the moments that mattered.",
+					"The winning side did not out-aim its opponent in every exchange. It made the opponent take more of them on uncomfortable terms. By the final rounds, every fake had a cost and every save had a purpose.",
+					"The lesson was less glamorous than a highlight reel, but easier to carry into the next tournament: make the other team prove the opening is real before you spend the round answering it."
+				]
+			},
+			"quiet-igL": {
+				category: "Valorant · Player profile",
+				title: "Meet the IGL who calls the quietest timeouts",
+				byline: "Sam Park · June 14, 2026 · 4 min read",
+				paragraphs: [
+					"Mina's timeouts rarely sound like speeches. She asks one question, lets the answer land, and gives the team a few seconds to hear its own plan again. In a game built around constant comms, that pause has become a calling card.",
+					"Her teammates say the quiet is deliberate. The goal is not to add another voice to a round that is already crowded, but to find the one useful piece of information everyone can act on.",
+					"It is a style that takes confidence to keep. A calm call does not look dramatic on the broadcast, but the clean retake afterward usually tells the story."
+				]
+			},
+			"summer-draft": {
+				category: "League of Legends · Meta watch",
+				title: "Three picks rewriting the summer draft",
+				byline: "Avery Kim · June 12, 2026 · 5 min read",
+				paragraphs: [
+					"The summer draft has started to reward flexibility over comfort. Three picks keep appearing early in rotation, not because they win every lane, but because they let teams hide their final shape for longer.",
+					"That extra uncertainty changes the second phase. Opponents have to spend bans reacting to possibilities, while the team picking first keeps more answers available for the final matchups.",
+					"The numbers are only part of the story. Watch the first objective setup: the real value shows up when a pick can leave lane early without surrendering the map."
+				]
+			},
+			"drop-spots": {
+				category: "Apex Legends · Field notes",
+				title: "What a landing spot tells you about a team",
+				byline: "Noah Patel · June 10, 2026 · 7 min read",
+				paragraphs: [
+					"A drop spot is a team identity compressed into a few seconds. Some squads choose the quiet edge and trust their rotations. Others land contested, betting that early pressure is worth the risk of leaving with less loot.",
+					"Neither approach is universal. The map, the lobby, and the team's comfort with a messy opening all matter. The consistent teams know why they are landing there before the dropship arrives.",
+					"Across a full split, those choices reveal where a roster believes it can create an advantage: in clean preparation, fast adaptation, or a fight no one else wants to take."
+				]
+			},
+			"home-game": {
+				category: "Counter-Strike · Culture",
+				title: "The chants, the signs, the city that showed up",
+				byline: "Taylor Brooks · June 8, 2026 · 3 min read",
+				paragraphs: [
+					"The line outside the venue started before doors. By the first map, handmade signs were visible from the broadcast desk and the loudest section had learned every pause in the crowd chant.",
+					"A home crowd does not change the server, but it changes the shape of a tournament day. Players hear familiar names between maps. Fans who met online finally have a reason to cheer side by side.",
+					"When the final handshake ended, most of the room stayed put. The weekend had become more than a bracket, and everyone in the stands knew it."
+				]
+			},
+			"warm-up": {
+				category: "Valorant · Practice room",
+				title: "Inside the warm-up that starts before sunrise",
+				byline: "Riley Chen · June 5, 2026 · 5 min read",
+				paragraphs: [
+					"The first block of practice is quieter than people expect. Players arrive at different speeds, check in with the coach, and ease into routines they can repeat even when a match day feels unfamiliar.",
+					"There is mechanics work, but the schedule also leaves room for review and a short reset before scrims. The staff tracks energy as carefully as aim; extra hours are not useful if the team cannot make clear decisions at the end of them.",
+					"The routine is not a secret training method. It is a boundary: a way to make focused work sustainable through a long season."
+				]
+			}
+		};
+		const storyDialog = document.querySelector(".story-dialog");
+		document.querySelectorAll("[data-open-story]").forEach((button) => {
+			button.addEventListener("click", () => {
+				const story = stories[button.dataset.openStory];
+				document.querySelector("#reader-category").textContent = story.category;
+				document.querySelector("#reader-title").textContent = story.title;
+				document.querySelector("#reader-byline").textContent = story.byline;
+				const body = document.querySelector("#reader-body");
+				body.replaceChildren(...story.paragraphs.map((text) => {
+					const paragraph = document.createElement("p");
+					paragraph.textContent = text;
+					return paragraph;
+				}));
+				storyDialog.showModal();
+			});
+		});
+		document.querySelector(".reader-close").addEventListener("click", () => storyDialog.close());
+
+		const menuToggle = document.querySelector(".menu-toggle");
+		menuToggle.addEventListener("click", () => {
+			const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+			menuToggle.setAttribute("aria-expanded", String(!isOpen));
+			document.querySelector(".main-nav").classList.toggle("open", !isOpen);
+		});
+
+		document.querySelector("#newsletter-form").addEventListener("submit", (event) => {
+			event.preventDefault();
+			const email = document.querySelector("#email");
+			document.querySelector("#form-message").textContent = `You're on the list, ${email.value}. See you Friday.`;
+			event.currentTarget.reset();
+		});
+	</script>
+</body>
+</html>
